@@ -1,6 +1,6 @@
-const workTime = 25;
-const shortBreakTime = 5;
-const longBreakTime = 15;
+const workTime = 0.1;
+const shortBreakTime = 0.1;
+const longBreakTime = 0.1;
 const cycles = 4;
 
 const timeDisplay = document.querySelector("#time-left");
@@ -17,7 +17,7 @@ function startPomodoro(){
     setDisplay("Working", workTime);
     isWorking = true;
 
-    timer = setInterval(updatePomodoro, 1000);
+    timer = setTimeout(updatePomodoro, 1000);
 }
 
 function updatePomodoro(){
@@ -25,7 +25,6 @@ function updatePomodoro(){
     timeDisplay.textContent = getDisplayTime(currSecs);
 
     if(currSecs === -1){ //Reached End of current time period
-        clearTimeout(timer);
 
         if(isWorking){
             workCounter++;
@@ -39,10 +38,10 @@ function updatePomodoro(){
         else{
             setDisplay("Working", workTime);
         }
-
-        timer = setInterval(updatePomodoro, 1000);
         isWorking = !isWorking;
     }
+
+    timer = setTimeout(updatePomodoro, 1000);
 }
 
 function setDisplay(periodName, time){
