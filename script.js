@@ -1,14 +1,13 @@
-const cycles = 4;
-
 const timeDisplay = document.querySelector(".display-time p");
 const periodDisplay = document.querySelector(".display-period p");
 const startBttn = document.querySelector("#start");
-const options = document.querySelectorAll(".time-option");
+const options = document.querySelectorAll(".option");
 
 let pomodoroOptions = {
     work: 0,
     short: 0,
-    long: 0
+    long: 0,
+    cycles: 0
 }
 
 let currSecs;
@@ -16,11 +15,22 @@ let timer;
 let isWorking = false;
 let workCounter = 0;
 
+function getOptions(){
+    options.forEach(option => {
+        if(option.classList.contains("time-option")){
+            pomodoroOptions[option.dataset.type] = calculateSecs(parseInt(option.querySelector(".option-counter").textContent));
+        } else{
+            pomodoroOptions[option.dataset.type] = parseInt(option.querySelector(".option-counter").textContent);
+        }
+    });
+    currSecs = pomodoroOptions.work;
+}
+
 function startPomodoro() {
 
     clearTimeout(timer);
 
-    currSecs = pomodoroOptions.work;
+    getOptions();
 
     setDisplay("Working", currSecs);
     isWorking = true;
@@ -33,10 +43,9 @@ function updatePomodoro() {
     timeDisplay.textContent = getDisplayTime(currSecs);
 
     if (currSecs === -1) { //Reached End of current time period
-
         if (isWorking) {
             workCounter++;
-            if (workCounter === cycles) {
+            if (workCounter === pomodoroOptions.cycles) {
                 setDisplay("Long Break", pomodoroOptions.long);
                 workCounter = 0;
             } else {
@@ -77,16 +86,14 @@ function getDisplayTime(totalSeconds) {
     return `${minutes}:${seconds}`;
 }
 
-function changeTime(e) {
+function changeCounter(e) {
     const change = parseInt(e.target.dataset.change);
     if (change) {
 
-        const newMins = parseInt(this.querySelector(".time-option-counter").textContent) + change;
-        this.querySelector(".time-option-counter").textContent = formatZero(newMins);
-
-        pomodoroOptions[this.dataset.option] = calculateSecs(newMins);
+        const newMins = parseInt(this.querySelector(".option-counter").textContent) + change;
+        this.querySelector(".option-counter").textContent = formatZero(newMins);
     }
 }
 
 startBttn.addEventListener("click", startPomodoro);
-options.forEach(option => option.addEventListener("click", changeTime));
+options.forEach(option => option.addEventListener("click", changeCounter));

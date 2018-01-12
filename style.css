@@ -23,10 +23,12 @@ body{
 
 .display{
     margin:30px 0px;
+    width:100%;
+
+    text-align: center;
 }
 
 .display-time{
-    max-width: 960px;
     font-size: 150pt;
 }
 
@@ -38,7 +40,7 @@ body{
     font-size: 50pt;
     font-variant-numeric: tabular-nums;
 
-    min-width: 500px;
+    max-width: 550px;
     margin: 0px auto 20px auto;
     padding:10px;
 }
@@ -49,8 +51,7 @@ body{
     text-align: center;
 }
 
-.time-option{
-
+.option{
     display:inline-flex;
     flex-direction: column;
     align-items: center;
@@ -58,11 +59,11 @@ body{
     margin: 0px 20px;
 }
 
-.time-option h2{
+.option h2{
     font-size:30pt;
 }
 
-.time-option-controls{
+.option-controls{
     margin:10px 0px;
 
     display:flex;
@@ -70,8 +71,9 @@ body{
     align-items: center;
 }
 
-.time-option-counter{
+.option-counter{
     font-size:40pt;
+    
     margin: 0px 10px;
 }
 
