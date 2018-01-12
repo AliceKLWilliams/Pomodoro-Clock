@@ -1,7 +1,7 @@
 const cycles = 4;
 
-const timeDisplay = document.querySelector("#time__text");
-const periodDisplay = document.querySelector("#period__text");
+const timeDisplay = document.querySelector(".display-time p");
+const periodDisplay = document.querySelector(".display-period p");
 const startBttn = document.querySelector("#start");
 const options = document.querySelectorAll(".time-option");
 
@@ -81,8 +81,8 @@ function changeTime(e) {
     const change = parseInt(e.target.dataset.change);
     if (change) {
 
-        const newMins = parseInt(this.querySelector(".option__text").textContent) + change;
-        this.querySelector(".option__text").textContent = formatZero(newMins);
+        const newMins = parseInt(this.querySelector(".time-option-counter").textContent) + change;
+        this.querySelector(".time-option-counter").textContent = formatZero(newMins);
 
         pomodoroOptions[this.dataset.option] = calculateSecs(newMins);
     }
