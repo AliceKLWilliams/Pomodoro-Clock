@@ -8,13 +8,17 @@
 </head>
 
 <body>
-    <div class="display">
-        <div class="display-time">
-            <p>00:00</p>
+    <div class="display-container">
+        <button class="bttn play">▶</button>
+        <div class="display">
+            <div class="display-time">
+                <p>00:00</p>
+            </div>
+            <div class="display-period">
+                <p>...</p>
+            </div>
         </div>
-        <div class="display-period">
-            <p>...</p>
-        </div>
+        <button class="bttn restart">⟲</button>
     </div>
 
     <div class="options">
@@ -22,7 +26,7 @@
             <h2>Work Time</h2>
             <div class="option-controls">
                 <button data-change="-1">-</button>
-                <p class="option-counter">00</p>
+                <p class="option-counter">25</p>
                 <button data-change="+1">+</button>
             </div>
         </div>
@@ -31,7 +35,7 @@
             <h2>Short Break</h2>
             <div class="option-controls">
                 <button data-change="-1">-</button>
-                <p class="option-counter">00</p>
+                <p class="option-counter">05</p>
                 <button data-change="+1">+</button>
             </div>
         </div>
@@ -40,7 +44,7 @@
             <h2>Long Break</h2>
             <div class="option-controls">
                 <button data-change="-1">-</button>
-                <p class="option-counter">00</p>
+                <p class="option-counter">10</p>
                 <button data-change="+1">+</button>
             </div>
         </div>
@@ -49,12 +53,10 @@
             <h2>Cycles</h2>
             <div class="option-controls">
                 <button data-change="-1">-</button>
-                <p class="option-counter">00</p>
+                <p class="option-counter">04</p>
                 <button data-change="+1">+</button>
             </div>
         </div>
-
-        <button class="bttn" id="start"> ▶</button>
     </div>
     <script src="script.js"></script>
 </body>

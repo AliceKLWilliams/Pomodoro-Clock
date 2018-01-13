@@ -1,6 +1,7 @@
 const timeDisplay = document.querySelector(".display-time p");
 const periodDisplay = document.querySelector(".display-period p");
-const startBttn = document.querySelector("#start");
+const startBttn = document.querySelector(".play");
+const restartBttn = document.querySelector(".restart");
 const options = document.querySelectorAll(".option");
 
 let pomodoroOptions = {
@@ -12,35 +13,71 @@ let pomodoroOptions = {
 
 let currSecs;
 let timer;
-let isWorking = false;
+let isWorking = true;
+let isPlaying = false;
 let workCounter = 0;
 
 function getOptions(){
     options.forEach(option => {
+
+        const numOption = parseInt(option.querySelector(".option-counter").textContent);
+
         if(option.classList.contains("time-option")){
-            pomodoroOptions[option.dataset.type] = calculateSecs(parseInt(option.querySelector(".option-counter").textContent));
+            pomodoroOptions[option.dataset.type] = calculateSecs(numOption);
         } else{
-            pomodoroOptions[option.dataset.type] = parseInt(option.querySelector(".option-counter").textContent);
+            pomodoroOptions[option.dataset.type] = numOption;
         }
     });
+
     currSecs = pomodoroOptions.work;
 }
 
-function startPomodoro() {
+function togglePlay() {
 
+    if(!isPlaying){
+        startBttn.textContent = "❚❚";
+        startBttn.classList.add("paused");
+        startPomodoro();
+    } else{
+        startBttn.textContent = "▶";
+        startBttn.classList.remove("paused");
+        pausePomodoro();
+    }
+}
+
+function pausePomodoro(){
     clearTimeout(timer);
+    isPlaying = false;
+}
 
+function resetPomodoro(){
+    resetOptions();
     getOptions();
-
     setDisplay("Working", currSecs);
-    isWorking = true;
+}
 
+function resetOptions(){
+    pomodoroOptions = {
+        work: 0,
+        short: 0,
+        long: 0,
+        cycles: 0
+    }
+
+    workCounter = 0;
+    isWorking = true;
+}
+
+function startPomodoro(){
     timer = setTimeout(updatePomodoro, 1000);
+    isPlaying = true;
 }
 
 function updatePomodoro() {
     currSecs--;
-    timeDisplay.textContent = getDisplayTime(currSecs);
+    if(currSecs >= 0){
+        timeDisplay.textContent = getDisplayTime(currSecs);
+    }
 
     if (currSecs === -1) { //Reached End of current time period
         if (isWorking) {
@@ -56,7 +93,6 @@ function updatePomodoro() {
         }
         isWorking = !isWorking;
     }
-
     timer = setTimeout(updatePomodoro, 1000);
 }
 
@@ -90,10 +126,14 @@ function changeCounter(e) {
     const change = parseInt(e.target.dataset.change);
     if (change) {
 
-        const newMins = parseInt(this.querySelector(".option-counter").textContent) + change;
-        this.querySelector(".option-counter").textContent = formatZero(newMins);
+        const newCount = parseInt(this.querySelector(".option-counter").textContent) + change;
+        if(newCount > 0){
+            this.querySelector(".option-counter").textContent = formatZero(newCount);
+        }  
     }
 }
 
-startBttn.addEventListener("click", startPomodoro);
+startBttn.addEventListener("click", togglePlay);
+restartBttn.addEventListener("click", resetPomodoro);
 options.forEach(option => option.addEventListener("click", changeCounter));
+resetPomodoro();

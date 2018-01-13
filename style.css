@@ -21,10 +21,14 @@ body{
     align-items: center;
 }
 
-.display{
-    margin:30px 0px;
-    width:100%;
+.display-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
+.display{
+    margin:30px 70px;
     text-align: center;
 }
 
@@ -49,6 +53,7 @@ body{
     min-width: 80%;
 
     text-align: center;
+
 }
 
 .option{
@@ -75,6 +80,22 @@ body{
     font-size:40pt;
     
     margin: 0px 10px;
+}
+
+
+.bttns{
+    display:flex;
+    justify-content: space-around;
+}
+
+.bttn{
+    height:100px;
+    width: 100px;
+}
+
+.paused{
+    background-color: white;
+    color: #ff85a2;
 }
 
 button{
